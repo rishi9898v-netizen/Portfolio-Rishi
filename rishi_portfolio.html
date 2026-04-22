@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishi Patel — Mechanical Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4F1EB;
+    --bg2: #EAE6DC;
+    --ink: #1A1714;
+    --ink2: #4A4540;
+    --ink3: #8A8078;
+    --accent: #C14B1E;
+    --accent2: #E8A87C;
+    --border: rgba(26,23,20,0.12);
+    --card: #FFFFFF;
+    --nav-bg: rgba(244,241,235,0.92);
+  }
+
+  [data-theme="dark"] {
+    --bg: #141210;
+    --bg2: #1C1916;
+    --ink: #F0EDE6;
+    --ink2: #B8B0A6;
+    --ink3: #706860;
+    --accent: #E8723F;
+    --accent2: #C14B1E;
+    --border: rgba(240,237,230,0.1);
+    --card: #201E1B;
+    --nav-bg: rgba(20,18,16,0.92);
+  }
+
+  html { transition: background-color 0.3s ease; }
+  body, .stat-card, .exp-item, .skill-card, .edu-card, .inv-pill, nav {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px; letter-spacing: 0.08em;
+    color: var(--ink3);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    color: var(--ink2); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* DARK MODE TOGGLE */
+  .theme-toggle {
+    background: none; border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    width: 52px; height: 28px;
+    padding: 3px;
+    display: flex; align-items: center;
+    position: relative;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+  .toggle-thumb {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--ink3);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s;
+    position: relative;
+  }
+  [data-theme="dark"] .toggle-thumb {
+    transform: translateX(24px);
+    background: var(--accent);
+  }
+  .toggle-icons {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6px;
+    pointer-events: none;
+  }
+  .toggle-icon { font-size: 10px; line-height: 1; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    width: 32px; height: 32px; padding: 4px;
+  }
+  .hamburger span {
+    display: block; height: 1.5px; width: 100%;
+    background: var(--ink2);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* MOBILE DRAWER */
+  .mobile-nav {
+    display: none;
+    position: fixed; top: 61px; left: 0; right: 0; z-index: 99;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s ease;
+  }
+  .mobile-nav.open {
+    max-height: 320px;
+    padding: 1rem 0 1.5rem;
+  }
+  .mobile-nav a {
+    display: block;
+    padding: 0.85rem 2rem;
+    font-size: 15px; font-weight: 500;
+    color: var(--ink2); text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s, background 0.2s;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover { color: var(--accent); background: var(--bg2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 3rem;
+    padding-top: 80px;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -200px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(193,75,30,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s forwards;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--ink2);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.65s forwards;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 1.25rem;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 70px;
+  }
+  .stat-label { font-size: 13px; color: var(--ink2); line-height: 1.4; }
+  .stat-label strong { display: block; color: var(--ink); font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 60px;
+    height: 1px; background: var(--ink3);
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* EXPERIENCE */
+  .exp-section { background: var(--bg2); }
+  .exp-grid { display: flex; flex-direction: column; gap: 2px; }
+  .exp-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .exp-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .exp-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem;
+    cursor: pointer;
+  }
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.2rem;
+  }
+  .exp-org { font-size: 13px; color: var(--accent); font-weight: 500; }
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--ink3);
+    text-align: right; white-space: nowrap; padding-top: 4px;
+  }
+  .exp-body {
+    padding: 0 1.75rem 1.5rem;
+    display: none;
+  }
+  .exp-body.open { display: block; }
+  .exp-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .exp-body li {
+    font-size: 14px; color: var(--ink2);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .exp-body li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .exp-toggle {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px; color: var(--ink3);
+    transition: transform 0.2s;
+    padding-top: 4px;
+  }
+  .exp-item.open .exp-toggle { transform: rotate(45deg); }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  .skill-card-icon {
+    font-size: 1.75rem; margin-bottom: 0.75rem;
+    display: block;
+  }
+  .skill-card h3 {
+    font-size: 14px; font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: var(--ink2);
+  }
+
+  /* EDUCATION */
+  .edu-section { background: var(--bg2); }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+  }
+  .edu-degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem; margin-bottom: 0.5rem;
+  }
+  .edu-school { font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 1.25rem; }
+  .edu-details { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .edu-detail {
+    font-size: 13px; color: var(--ink2);
+  }
+  .edu-detail span { color: var(--ink); font-weight: 500; }
+  .edu-gpa-big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--accent);
+    line-height: 1;
+    text-align: right;
+  }
+  .edu-gpa-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--ink3); letter-spacing: 0.1em;
+    text-align: right; margin-top: 0.25rem;
+  }
+
+  /* PROJECTS */
+  .projects-section { background: var(--bg2); }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .project-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .project-viewer {
+    width: 100%; height: 240px;
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .project-viewer model-viewer {
+    width: 100%; height: 100%;
+    background: transparent;
+  }
+  .viewer-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.75rem; width: 100%; height: 100%;
+    color: var(--ink3);
+  }
+  .viewer-placeholder svg { opacity: 0.35; }
+  .viewer-placeholder p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.08em;
+    text-align: center; line-height: 1.6;
+    max-width: 200px;
+  }
+  .viewer-placeholder .upload-hint {
+    font-size: 10px; color: var(--accent);
+    border: 1px dashed var(--accent);
+    border-radius: 4px; padding: 4px 10px;
+    opacity: 0.7;
+  }
+  .project-info { padding: 1.5rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 7px;
+    color: var(--ink3);
+  }
+  .project-tag.accent {
+    background: rgba(193,75,30,0.08);
+    border-color: rgba(193,75,30,0.25);
+    color: var(--accent);
+  }
+  .project-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem; margin-bottom: 0.4rem;
+  }
+  .project-desc { font-size: 13px; color: var(--ink2); line-height: 1.6; margin-bottom: 1.25rem; }
+  .project-metrics {
+    display: flex; gap: 1.25rem; flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .project-metric { font-size: 12px; color: var(--ink3); }
+  .project-metric strong { display: block; font-size: 15px; color: var(--ink); font-weight: 500; margin-bottom: 1px; }
+  .model-viewer-loaded { background: var(--bg); }
+
+  /* RESUME */
+  .resume-section { background: var(--bg); }
+  .resume-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+  .resume-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem; margin-bottom: 0.5rem;
+  }
+  .resume-sub { font-size: 14px; color: var(--ink2); margin-bottom: 2rem; max-width: 480px; line-height: 1.7; }
+  .resume-highlights { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+  .resume-highlight {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 13px; color: var(--ink2);
+  }
+  .resume-highlight::before {
+    content: '';
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .resume-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    transition: opacity 0.2s;
+  }
+  .btn-download:hover { opacity: 0.88; }
+  .resume-preview {
+    width: 180px; height: 240px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem; color: var(--ink3);
+    flex-shrink: 0;
+  }
+  .resume-preview-lines {
+    width: 110px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .resume-preview-line {
+    height: 6px; border-radius: 3px;
+    background: var(--border);
+  }
+  .resume-preview-line.dark { background: var(--ink3); opacity: 0.35; }
+  .resume-preview-line.accent { background: var(--accent); opacity: 0.5; }
+
+  @media (max-width: 768px) {
+    .resume-card { grid-template-columns: 1fr; }
+    .resume-preview { display: none; }
+    .project-grid { grid-template-columns: 1fr; }
+  }
+
+  /* INVOLVEMENT */
+  .involvement-list { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .inv-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.6rem 1.25rem;
+    font-size: 13px; color: var(--ink2);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .inv-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .contact-section .section-label { color: rgba(244,241,235,0.4); }
+  .contact-section .section-label::after { background: rgba(244,241,235,0.3); }
+  .contact-section .section-title { color: var(--bg); }
+  .contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(244,241,235,0.25);
+    padding-bottom: 3px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { color: var(--accent2); border-color: var(--accent2); }
+  .contact-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--ink3);
+    text-align: center;
+    padding: 1.5rem 3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: block; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .edu-card { grid-template-columns: 1fr; }
+    .edu-gpa-big { text-align: left; }
+    .edu-gpa-label { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">RP / MechE</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <div class="toggle-icons">
+          <span class="toggle-icon">☀️</span>
+          <span class="toggle-icon">🌙</span>
+        </div>
+        <div class="toggle-thumb"></div>
+      </button>
+    </li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle dark mode" style="display:none;">
+      <div class="toggle-icons">
+        <span class="toggle-icon">☀️</span>
+        <span class="toggle-icon">🌙</span>
+      </div>
+      <div class="toggle-thumb"></div>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#experience" onclick="closeMobileNav()">Experience</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#skills" onclick="closeMobileNav()">Skills</a>
+  <a href="#education" onclick="closeMobileNav()">Education</a>
+  <a href="#resume" onclick="closeMobileNav()">Resume</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Mechanical Engineer · Class of 2026</p>
+    <h1>Rishi<br><em>Patel</em></h1>
+    <p class="hero-desc">
+      Structural & systems engineer focused on EV battery architecture, FEA-validated design,
+      and CFD-optimized thermal management. Based at the University of Alabama.
+    </p>
+    <div class="hero-ctas">
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-num">3.8</div>
+      <div class="stat-label"><strong>GPA</strong>B.S. Mechanical Engineering<br>+ Manufacturing Minor</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2+</div>
+      <div class="stat-label"><strong>Years Leading</strong>Battery Workforce Challenge<br>Structural Team</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">250%</div>
+      <div class="stat-label"><strong>Projected ROI</strong>Energy efficiency solutions<br>at Alabama Power</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <p class="section-label reveal">Experience</p>
+  <h2 class="section-title reveal">Where I've built things</h2>
+
+  <div class="exp-grid">
+
+    <div class="exp-item reveal" id="exp1">
+      <div class="exp-header" onclick="toggleExp('exp1')">
+        <div>
+          <div class="exp-role">Lead, Structural Team</div>
+          <div class="exp-org">Battery Workforce Challenge</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem">
+          <div class="exp-date">May 2025 – Present</div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body" id="exp1-body">
+        <ul>
+          <li>Lead structural design and integration of lithium-ion battery modules within full EV pack architecture, balancing performance, manufacturability, and serviceability.</li>
+          <li>Engineered and FEA-validated battery module mounting system to meet UN 38.3 and SAE J2380 vibration requirements under multi-axis dynamic loading.</li>
+          <li>Optimized coolant pipe routing through iterative CFD analysis, minimizing pressure drop and improving overall efficiency.</li>
+          <li>Developed clamp-free coolant connectors to reduce assembly complexity and improve reliability.</li>
+          <li>Performed GD&T and tolerance stack-up analysis to ensure precision fit and manufacturability of components.</li>
+          <li>Chaired weekly cross-functional design reviews across electrical, thermal, and structural teams.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" id="exp2">
+      <div class="exp-header" onclick="toggleExp('exp2')">
+        <div>
+          <div class="exp-role">Co-Lead, Structural Team</div>
+          <div class="exp-org">Battery Workforce Challenge</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem">
+          <div class="exp-date">Sept 2023 – May 2025</div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body" id="exp2-body">
+        <ul>
+          <li>Spearheaded design and packaging of the Battery Disconnect Unit (BDU) responsible for high-voltage current distribution within the battery pack.</li>
+          <li>Coordinated cross-disciplinary collaboration between electrical and structural sub-teams to align BDU design with system-level requirements.</li>
+          <li>Optimized busbar routing to minimize resistive losses while reducing spatial footprint within a constrained pack envelope.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal" id="exp3">
+      <div class="exp-header" onclick="toggleExp('exp3')">
+        <div>
+          <div class="exp-role">Research Assistant</div>
+          <div class="exp-org">Alabama Power</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem">
+          <div class="exp-date">Sept 2022 – Dec 2022</div>
+          <div class="exp-toggle">+</div>
+        </div>
+      </div>
+      <div class="exp-body" id="exp3-body">
+        <ul>
+          <li>Performed energy audits across five manufacturing facilities to assess consumption patterns and identify efficiency gaps.</li>
+          <li>Applied statistical analysis to identify critical inefficiencies and develop targeted optimization strategies.</li>
+          <li>Proposed energy efficiency solutions representing a $40,000 investment, delivering a projected 250% ROI — $100,000 in savings per facility over 10 years with a 4-year payback period.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">Technical Skills</p>
+  <h2 class="section-title reveal">Tools & capabilities</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">📐</span>
+      <h3>CAD & Design</h3>
+      <div class="skill-tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">Fusion 360</span>
+        <span class="tag">Siemens NX</span>
+        <span class="tag">Sheet Metal</span>
+        <span class="tag">DFM</span>
+        <span class="tag">DFS</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">🔬</span>
+      <h3>Simulation & Analysis</h3>
+      <div class="skill-tags">
+        <span class="tag">FEA</span>
+        <span class="tag">CFD</span>
+        <span class="tag">GT Suite</span>
+        <span class="tag">MATLAB</span>
+        <span class="tag">Vibration Analysis</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">⚙️</span>
+      <h3>Manufacturing</h3>
+      <div class="skill-tags">
+        <span class="tag">GD&T</span>
+        <span class="tag">Tolerance Stack-up</span>
+        <span class="tag">DFMEA</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">🔋</span>
+      <h3>EV & Energy Systems</h3>
+      <div class="skill-tags">
+        <span class="tag">Battery Pack Design</span>
+        <span class="tag">Thermal Management</span>
+        <span class="tag">High-Voltage Systems</span>
+        <span class="tag">Energy Auditing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <p class="section-label reveal">Projects</p>
+  <h2 class="section-title reveal">Engineering work</h2>
+  <div class="project-grid">
+
+    <!-- Project 1: EV Battery Module -->
+    <div class="project-card reveal">
+      <div class="project-viewer">
+        <!-- SWAP: replace YOUR_MODEL_URL with your hosted .glb file link -->
+        <!-- Example: src="https://yoursite.com/battery-module.glb" -->
+        <!-- To get a .glb: Fusion 360 → File → Export → .glb  |  SolidWorks → Save As → .glb -->
+        <div class="viewer-placeholder" id="ph1">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="16" width="32" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M16 16V12a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="24" cy="26" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 26h4M40 26h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p>EV Battery Module<br>3D model goes here</p>
+          <span class="upload-hint">swap in your .glb file</span>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag accent">BWC · 2025</span>
+          <span class="project-tag">FEA</span>
+          <span class="project-tag">SolidWorks</span>
+          <span class="project-tag">UN 38.3</span>
+          <span class="project-tag">SAE J2380</span>
+        </div>
+        <div class="project-name">EV Battery Pack — Structural Integration</div>
+        <div class="project-desc">Designed and FEA-validated the full structural integration of lithium-ion battery modules into an EV pack architecture. Developed mounting systems validated against multi-axis vibration standards, optimized coolant routing via CFD, and introduced clamp-free connector designs to reduce assembly steps.</div>
+        <div class="project-metrics">
+          <div class="project-metric"><strong>UN 38.3</strong>Certified</div>
+          <div class="project-metric"><strong>SAE J2380</strong>Compliant</div>
+          <div class="project-metric"><strong>CFD</strong>Optimized flow</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: BDU -->
+    <div class="project-card reveal">
+      <div class="project-viewer">
+        <div class="viewer-placeholder" id="ph2">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="28" height="28" rx="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M18 24h12M24 18v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="14" cy="14" r="2" fill="currentColor" opacity="0.5"/>
+            <circle cx="34" cy="14" r="2" fill="currentColor" opacity="0.5"/>
+            <circle cx="14" cy="34" r="2" fill="currentColor" opacity="0.5"/>
+            <circle cx="34" cy="34" r="2" fill="currentColor" opacity="0.5"/>
+          </svg>
+          <p>Battery Disconnect Unit<br>3D model goes here</p>
+          <span class="upload-hint">swap in your .glb file</span>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag accent">BWC · 2024</span>
+          <span class="project-tag">High Voltage</span>
+          <span class="project-tag">Busbar Design</span>
+          <span class="project-tag">GD&T</span>
+        </div>
+        <div class="project-name">Battery Disconnect Unit (BDU)</div>
+        <div class="project-desc">Designed and packaged the Battery Disconnect Unit responsible for high-voltage current distribution within the battery pack. Optimized busbar routing to minimize resistive losses while reducing spatial footprint inside a tightly constrained pack envelope.</div>
+        <div class="project-metrics">
+          <div class="project-metric"><strong>HV</strong>Distribution</div>
+          <div class="project-metric"><strong>Busbar</strong>Optimized routing</div>
+          <div class="project-metric"><strong>DFM</strong>Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Energy Audit -->
+    <div class="project-card reveal">
+      <div class="project-viewer">
+        <div class="viewer-placeholder" id="ph3">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 36L16 24l8 6 8-14 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="6" y="6" width="36" height="36" rx="3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <p>Energy Audit Analysis<br>Add a chart or diagram</p>
+          <span class="upload-hint">swap in an image or .glb</span>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag accent">Alabama Power · 2022</span>
+          <span class="project-tag">Statistical Analysis</span>
+          <span class="project-tag">Energy Systems</span>
+        </div>
+        <div class="project-name">Manufacturing Facility Energy Audit</div>
+        <div class="project-desc">Conducted energy audits across five manufacturing facilities, applying statistical analysis to identify critical inefficiencies. Proposed a $40,000 investment yielding a projected 250% ROI — $100,000 in annual savings per facility with a 4-year payback period.</div>
+        <div class="project-metrics">
+          <div class="project-metric"><strong>5</strong>Facilities audited</div>
+          <div class="project-metric"><strong>250%</strong>Projected ROI</div>
+          <div class="project-metric"><strong>$100K</strong>Savings / facility</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="reveal" style="margin-top:2rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:0.08em;">
+    3D viewers activate once you replace the placeholder URLs with your hosted .glb files. Export from Fusion 360 → File → Export → .glb, then host on GitHub or Netlify.
+  </p>
+</section>
+
+<!-- RESUME -->
+<section class="resume-section" id="resume">
+  <p class="section-label reveal">Resume</p>
+  <h2 class="section-title reveal">Download my CV</h2>
+  <div class="resume-card reveal">
+    <div>
+      <div class="resume-headline">Rishi Patel</div>
+      <div class="resume-sub">B.S. Mechanical Engineering · University of Alabama · Class of 2026. Specializing in EV battery architecture, FEA-validated structural design, and CFD-based thermal optimization.</div>
+      <div class="resume-highlights">
+        <div class="resume-highlight">3.8 GPA · Manufacturing Minor</div>
+        <div class="resume-highlight">Lead, Battery Workforce Challenge Structural Team</div>
+        <div class="resume-highlight">SolidWorks · Fusion 360 · Siemens NX · FEA · CFD · GT Suite</div>
+        <div class="resume-highlight">UN 38.3 · SAE J2380 · GD&T · Tolerance Stack-up</div>
+      </div>
+      <div class="resume-actions">
+        <!-- SWAP: replace # with your actual hosted resume PDF link -->
+        <!-- e.g. href="https://yoursite.com/Rishi_Patel_Resume.pdf" -->
+        <a href="#" class="btn-download" download>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Resume (PDF)
+        </a>
+        <a href="https://www.linkedin.com/in/rishi-patel123" target="_blank" class="btn-outline">View LinkedIn</a>
+      </div>
+      <p style="margin-top:1.25rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);letter-spacing:0.06em;">
+        Replace the # in the download button with your hosted PDF link to activate it.
+      </p>
+    </div>
+    <div class="resume-preview" aria-hidden="true">
+      <div class="resume-preview-lines">
+        <div class="resume-preview-line accent" style="width:80%;height:8px;"></div>
+        <div class="resume-preview-line" style="width:55%;"></div>
+        <div style="height:10px;"></div>
+        <div class="resume-preview-line dark" style="width:40%;height:5px;"></div>
+        <div class="resume-preview-line" style="width:100%;"></div>
+        <div class="resume-preview-line" style="width:90%;"></div>
+        <div class="resume-preview-line" style="width:95%;"></div>
+        <div style="height:8px;"></div>
+        <div class="resume-preview-line dark" style="width:40%;height:5px;"></div>
+        <div class="resume-preview-line" style="width:85%;"></div>
+        <div class="resume-preview-line" style="width:100%;"></div>
+        <div class="resume-preview-line" style="width:70%;"></div>
+        <div style="height:8px;"></div>
+        <div class="resume-preview-line dark" style="width:35%;height:5px;"></div>
+        <div class="resume-preview-line" style="width:90%;"></div>
+        <div class="resume-preview-line" style="width:80%;"></div>
+        <div class="resume-preview-line" style="width:95%;"></div>
+        <div class="resume-preview-line" style="width:60%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="edu-section" id="education">
+  <p class="section-label reveal">Education</p>
+  <h2 class="section-title reveal">Academic background</h2>
+  <div class="edu-card reveal">
+    <div>
+      <div class="edu-degree">B.S. Mechanical Engineering</div>
+      <div class="edu-school">University of Alabama · Tuscaloosa, AL</div>
+      <div class="edu-details">
+        <div class="edu-detail">Graduation: <span>May 2026</span></div>
+        <div class="edu-detail">Minor: <span>Manufacturing</span></div>
+        <div class="edu-detail">Enrolled: <span>August 2022</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="edu-gpa-big">3.8</div>
+      <div class="edu-gpa-label">Overall GPA</div>
+    </div>
+  </div>
+</section>
+
+<!-- INVOLVEMENT -->
+<section id="involvement">
+  <p class="section-label reveal">Involvement</p>
+  <h2 class="section-title reveal">Beyond the classroom</h2>
+
+  <div class="inv-highlight reveal" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem 1.75rem;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:0.2rem;">Residential Advisor</div>
+      <div style="font-size:13px;color:var(--accent);font-weight:500;margin-bottom:0.5rem;">University of Alabama · Jan 2024 – Present</div>
+      <div style="font-size:14px;color:var(--ink2);">Led community-building initiatives and conflict resolution for 30+ residents, fostering a positive living environment.</div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);white-space:nowrap;">Leadership · Community</div>
+  </div>
+
+  <div class="involvement-list reveal">
+    <div class="inv-pill"><span class="inv-dot"></span>Student Government — Academic Affairs Committee</div>
+    <div class="inv-pill"><span class="inv-dot"></span>Rocketry Club</div>
+    <div class="inv-pill"><span class="inv-dot"></span>Astronomy Club</div>
+    <div class="inv-pill"><span class="inv-dot"></span>Climbing Club</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <p class="section-label reveal">Contact</p>
+  <h2 class="section-title reveal">Let's connect</h2>
+  <div class="contact-links reveal">
+    <a href="tel:2056015533" class="contact-link">
+      <span class="contact-mono">(205) 601-5533</span>
+    </a>
+    <a href="mailto:rpatel28@crimson.ua.edu" class="contact-link">
+      <span class="contact-mono">rpatel28@crimson.ua.edu</span>
+    </a>
+    <a href="https://www.linkedin.com/in/rishi-patel123" target="_blank" class="contact-link">
+      <span class="contact-mono">linkedin.com/in/rishi-patel123</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Rishi Patel &nbsp;·&nbsp; Mechanical Engineer &nbsp;·&nbsp; University of Alabama
+</footer>
+
+<script>
+  // Dark mode
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme') || 'light';
+  if (saved === 'dark') root.setAttribute('data-theme', 'dark');
+
+  function toggleTheme() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  }
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+  // Show mobile toggle on small screens
+  function syncMobileToggle() {
+    const isMobile = window.innerWidth <= 768;
+    document.getElementById('themeToggleMobile').style.display = isMobile ? 'flex' : 'none';
+  }
+  syncMobileToggle();
+  window.addEventListener('resize', syncMobileToggle);
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('open');
+  });
+  function closeMobileNav() {
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('open');
+  }
+
+  // Close mobile nav on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
+
+  // Accordion
+  function toggleExp(id) {
+    const item = document.getElementById(id);
+    const body = document.getElementById(id + '-body');
+    item.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
